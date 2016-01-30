@@ -47,14 +47,16 @@ func Watchdog() (stop chan struct{}, err error) {
 	stop = make(chan struct{})
 	// Start the periodic pings
 	go func() {
-		select {
-		case <-stop:
-			log.Tag("systemd", "watchdog").Println("By request watchdog is stoping.")
-			return
-		case <-time.After(wPerHalf):
-			// Send the ping.
-			log.DebugLevel().Tag("systemd", "watchdog").Println("Ping.")
-			daemon.SdNotify(sdState)
+		for {
+			select {
+			case <-stop:
+				log.Tag("systemd", "watchdog").Println("By request watchdog is stoping.")
+				return
+			case <-time.After(wPerHalf):
+				// Send the ping.
+				log.DebugLevel().Tag("systemd", "watchdog").Println("Ping.")
+				daemon.SdNotify(sdState)
+			}
 		}
 	}()
 	return

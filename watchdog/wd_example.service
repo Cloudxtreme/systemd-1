@@ -1,0 +1,6 @@
+[Service]
+WatchdogSec=30s
+Restart=on-failure
+StartLimitInterval=5min
+StartLimitBurst=4
+StartLimitAction=reboot-force

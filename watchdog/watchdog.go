@@ -10,9 +10,9 @@ import (
 	"time"
 
 	"github.com/coreos/go-systemd/daemon"
-	"github.com/coreos/go-systemd/util"
 	"github.com/fcavani/e"
 	"github.com/fcavani/log"
+	"github.com/fcavani/systemd/util"
 )
 
 const ErrNotRunning = "systemd is not running"

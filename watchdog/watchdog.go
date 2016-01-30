@@ -18,6 +18,7 @@ import (
 const ErrNotRunning = "systemd is not running"
 const ErrNoWatchdog = "no watchdog enabled for this daemon"
 const ErrInvPeriode = "invalid periode"
+const ErrInvInterval = "invalid interval"
 
 const sdState = "WATCHDOG=1"
 
@@ -38,8 +39,11 @@ func Watchdog() (stop chan struct{}, err error) {
 	if err != nil {
 		return e.Push(err, ErrInvPeriode)
 	}
-	wPerHalf := time.Duration(int(wPerInt64) / 2)
-	log.Tag("systemd", "watchdog").Println("Starting the watchdog.")
+	wPerHalf := time.Duration(int(wPerInt64)/2) * time.Microsecond
+	if wPerHalf <= 0 {
+		return e.New(ErrInvInterval)
+	}
+	log.Tag("systemd", "watchdog").Printf("Starting the watchdog with interval of %v.", wPerHalf)
 	stop = make(chan struct{})
 	// Start the periodic pings
 	go func() {

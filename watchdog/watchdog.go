@@ -37,11 +37,11 @@ func Watchdog() (stop chan struct{}, err error) {
 	}
 	wPerInt64, err := strconv.ParseInt(wPeriodeµsec, 10, 32)
 	if err != nil {
-		return e.Push(err, ErrInvPeriode)
+		return nil, e.Push(err, ErrInvPeriode)
 	}
 	wPerHalf := time.Duration(int(wPerInt64)/2) * time.Microsecond
 	if wPerHalf <= 0 {
-		return e.New(ErrInvInterval)
+		return nil, e.New(ErrInvInterval)
 	}
 	log.Tag("systemd", "watchdog").Printf("Starting the watchdog with interval of %v.", wPerHalf)
 	stop = make(chan struct{})

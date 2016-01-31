@@ -25,6 +25,23 @@ const (
 	Other
 )
 
+func (p ProcessStatus) String() string {
+	switch p {
+	case Unknow:
+		return "unknow"
+	case Running:
+		return "running"
+	case Stopped:
+		return "stopped"
+	case Deleted:
+		return "deleted"
+	case Other:
+		return "other"
+	default:
+		return "invalid status"
+	}
+}
+
 type ServiceStatus struct {
 	// Name of the service
 	Name string

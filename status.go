@@ -87,6 +87,7 @@ func (s *ServiceStatus) Init() error {
 				} else if st.LoadState == "not-found" && st.ActiveState == "active" && st.SubState == "exited" {
 					s.setStatus(Stopped)
 				} else {
+					log.Tag("systemd").Printf("ActiveState: %v, LoadState: %v, SubState: %v", st.ActiveState, st.LoadState, st.SubState)
 					s.setStatus(Other)
 				}
 			case err := <-cherr:

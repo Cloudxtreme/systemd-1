@@ -54,7 +54,7 @@ func Watchdog() (stop chan struct{}, err error) {
 				return
 			case <-time.After(wPerHalf):
 				// Send the ping.
-				log.DebugLevel().Tag("systemd", "watchdog").Println("Ping.")
+				log.ProtoLevel().Tag("systemd", "watchdog").Println("Ping.")
 				daemon.SdNotify(sdState)
 			}
 		}

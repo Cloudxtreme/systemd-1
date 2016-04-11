@@ -84,6 +84,8 @@ func (s *ServiceStatus) Init() error {
 				}
 				if st.LoadState == "loaded" && st.ActiveState == "active" && st.SubState == "running" {
 					s.setStatus(Running)
+				} else if st.LoadState == "loaded" && st.ActiveState == "active" && st.SubState == "active" {
+					s.setStatus(Running)
 				} else if st.LoadState == "not-found" && st.ActiveState == "active" && st.SubState == "exited" {
 					s.setStatus(Stopped)
 				} else {

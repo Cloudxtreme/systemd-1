@@ -75,6 +75,7 @@ func (s *ServiceStatus) Init() error {
 				}
 				st, found := status[s.Name]
 				if !found {
+					log.Tag("systemd").Printf("Status of %v is unknow.", s.Name)
 					s.setStatus(Unknow)
 					continue
 				}

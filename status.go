@@ -92,6 +92,7 @@ func (s *ServiceStatus) Init() error {
 				} else if st.LoadState == "loaded" && st.ActiveState == "inactive" && st.SubState == "dead" {
 					s.setStatus(Stopped)
 				} else {
+					//ActiveState: deactivating, LoadState: loaded, SubState: stop-sigterm
 					log.Tag("systemd").Printf("ActiveState: %v, LoadState: %v, SubState: %v", st.ActiveState, st.LoadState, st.SubState)
 					s.setStatus(Other)
 				}
